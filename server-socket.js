@@ -23,14 +23,11 @@ var sendHeader = function(socket, statusCode){
 }
 
 var sendNotFound = function(socket){
-  console.log("ERROUUUUU");
   fs.readFile("404.html", "utf8", function (err, data){
-    console.log(data);
+    sendHeader(socket, 200);
+    socket.write(data);
+    socket.destroy();
   });
-  // fs.readFile("trabalho.html", "utf8", function (err, data){
-  //   sendHeader(socket, 200);
-  //   socket.write(data);
-  //   socket.destroy();
 }
 
 var server = net.createServer(function(socket){
@@ -40,13 +37,12 @@ var server = net.createServer(function(socket){
     var fileName = getFileName(data.toString());
     fs.readFile("." + fileName, "utf8", function (err, fileData){
       if(err){
-        console.log("eRRRRROuuuu");
         sendNotFound(socket);
-        console.log(err);
+      } else {
+        sendHeader(socket, 200);
+        socket.write(fileData);
+        socket.destroy();
       }
-      sendHeader(socket, 200);
-      socket.write(fileData);
-      socket.destroy();
     });
   });
 
