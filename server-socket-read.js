@@ -13,9 +13,6 @@ var sendHeader = function(clientSocket, statusCode){
 	}else if (statusCode == 404){
 		clientSocket.write("HTTP/1.1 404 NOT FOUND\r\n");
 	}
-	clientSocket.write("Server: Talita/1.0.0 (WIN10)\r\n");
-	clientSocket.write("Connection: close\r\n");
-	clientSocket.write("\r\n");
 }
 
 var sendNotFound = function(clientSocket){
